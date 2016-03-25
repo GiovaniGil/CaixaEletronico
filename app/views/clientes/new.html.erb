@@ -1,0 +1,31 @@
+<%= form_for @cliente do |f| %>
+	<div>
+		<%= f.label :nome %>
+	</div>
+	<div>
+		<%= f.text_field :nome %>
+	</div>
+
+	<div>
+		<%= f.label :endereco, "Endereço" %>
+	</div>
+	<div>
+		<%= f.text_field :endereco %>
+	</div>
+
+	<div>
+		<%= f.label :telefone %>
+	</div>
+	<div>
+		<%= f.text_field :telefone %>
+	</div>
+
+	<div>
+		<%= f.label :dataNascimento, "Data de nascimento" %>
+	</div>
+	<div>
+		<%= f.date_field :dataNascimento, :value => Time.now.strftime('%d-%m-%Y') %>
+	</div>
+
+	<div><%= f.submit %></div>
+<% end %>

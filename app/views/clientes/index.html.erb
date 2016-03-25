@@ -1,0 +1,32 @@
+<h1>Clientes</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Nome</th>
+    <th>Endereço</th>
+    <th>Telefone</th>
+    <th>Data de nascimento</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @clientes.each do |cliente| %>
+      <tr>
+        <td><%= cliente.nome %></td>
+        <td><%= cliente.endereco %></td>
+        <td><%= cliente.telefone %></td>
+        <td><%= cliente.dataNascimento %></td>
+        <td><%= link_to 'Exibir', cliente %></td>
+        <td><%= link_to 'Editar', edit_cliente_path(cliente) %></td>
+        <td><%= link_to 'Excluir', cliente, method: :delete,
+                        data: { confirm: 'Você tem certeza que deseja excluir o cadastro de'+cliente.nome+'?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Cadastrar Cliente', new_cliente_path %>

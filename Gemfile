@@ -15,6 +15,25 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 
+group :development, :test do
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'ZenTest', '4.11.0'
+  gem 'autotest', '4.4.6'
+  gem 'autotest-rails', '4.2.1'
+end
+
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?	
+
+
+group :test do
+   gem 'ruby-prof'
+end
+
+
+gem 'coffee-script-source', '1.8.0'  if Gem.win_platform? 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

@@ -1,0 +1,30 @@
+<h1>Listing contas</h1>
+
+<p id="notice"><%= notice %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Descricao</th>
+      <th>Codigo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contas.each do |conta| %>
+      <tr>
+        <td><%= conta.descricao %></td>
+        <td><%= conta.codigo %></td>
+        <td><%= link_to 'Exibir', cliente_conta_path(@cliente, conta) %></td>
+        <td><%= link_to 'Editar', edit_cliente_conta_path(@cliente, conta) %></td>
+        <td><%= link_to 'Excluir', cliente_conta_path(@cliente, conta), method: :delete, data: { message: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '+ Nova Conta', new_cliente_conta_path(@cliente) %>

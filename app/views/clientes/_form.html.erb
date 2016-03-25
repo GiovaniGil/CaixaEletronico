@@ -1,0 +1,38 @@
+<%= form_for(@cliente) do |f| %>
+    <% if @cliente.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@cliente.errors.count, "error") %> prohibited this cliente from being saved:</h2>
+
+          <ul>
+            <% @cliente.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :nome %><br>
+      <%= f.text_field :nome %>
+    </div>
+    <div class="field">
+      <%= f.label :endereco, "Endereço" %><br>
+      <%= f.text_field :endereco %>
+    </div>
+    <div class="field">
+      <%= f.label :telefone %><br>
+      <%= f.text_field :telefone %>
+    </div>
+    <div class="field">
+      <%= f.label :dataNascimento, "Data de nascimento" %><br>
+      <%= f.date_select :dataNascimento,
+                        :order => [:day, :month, :year],
+                        :start_year => Date.current.year, :end_year => 1920,
+                        use_month_numbers: true,
+                        prompt: { day: 'Dia', month: 'Mês', year: 'Ano' }%>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Salvar'%>
+    </div>
+<% end %>

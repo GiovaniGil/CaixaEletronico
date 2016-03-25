@@ -1,0 +1,14 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+mov_one:
+  tipo: 'C'
+  valor: 123.4
+  conta_orig: conta_one
+  conta_dest: conta_two
+
+mov_two:
+  tipo: 'D'
+  valor: 1.5
+  conta_orig: conta_two
+  conta_dest: conta_one

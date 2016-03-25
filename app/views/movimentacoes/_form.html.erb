@@ -1,0 +1,46 @@
+<%
+  def form
+    if params[:tipo] == 'D'
+      form_for(@movimentacao) { |f| yield f }
+    else
+      form_for([@cliente, @conta, @movimentacao]) { |f| yield f }
+    end
+  end
+%>
+<%= flash[:error] %>
+
+<%= form do |f| %>
+  <% if @movimentacao.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@movimentacao.errors.count, "erro") %> prohibited this movimentacao from being saved:</h2>
+
+      <ul>
+      <% @movimentacao.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <% if !params[:tipo].nil? && params[:tipo] != 'D' %>
+    <div class="field">
+      <%= f.label :conta_orig_id, 'Conta origem' %><br>
+      <%= f.text_field :conta_orig_id %>
+    </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :conta_dest_id, 'Conta destino' %><br>
+      <%= f.text_field :conta_dest_id %>
+    </div>
+
+    <div class="field">
+      <%= f.label :valor, 'Valor' %><br>
+      <%= f.number_field :valor %>
+    </div>
+
+    <%= f.hidden_field :tipo , :value=>params[:tipo] %>
+    <div class="actions">
+    <%= f.submit "Salvar movimentação" %>
+  </div>
+<% end %>

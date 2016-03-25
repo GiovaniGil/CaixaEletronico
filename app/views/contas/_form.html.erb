@@ -1,0 +1,26 @@
+<%= form_for([@cliente, @conta]) do |f| %>
+  <% if @conta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@conta.errors.count, "error") %> prohibited this conta from being saved:</h2>
+
+      <ul>
+      <% @conta.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :descricao, "Descrição" %><br>
+    <%= f.text_field :descricao %>
+  </div>
+  <div class="field">
+    <%= f.label :codigo %><br>
+    <%= f.text_field :codigo %>
+  </div>
+     <%= f.hidden_field :cliente_id , :value=>params[:cliente_id] %>
+  <div class="actions">
+    <%= f.submit "Salvar" %>
+  </div>
+<% end %>

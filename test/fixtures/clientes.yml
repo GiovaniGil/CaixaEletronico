@@ -1,0 +1,14 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+cliente_um:
+  nome: Cliente 1
+  endereco: MyString
+  telefone: MyString
+  dataNascimento: 2016-03-21
+
+cliente_dois:
+  nome: Cliente 2
+  endereco: MyString
+  telefone: MyString
+  dataNascimento: 2016-03-21

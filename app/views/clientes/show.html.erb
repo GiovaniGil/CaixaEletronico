@@ -1,0 +1,49 @@
+<h1>Cliente - <%= @cliente.nome %></h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Endereço:</strong>
+  <%= @cliente.endereco %>
+</p>
+
+<p>
+  <strong>Telefone:</strong>
+  <%= @cliente.telefone %>
+</p>
+
+<p>
+  <strong>Data de nascimento:</strong>
+  <%= @cliente.dataNascimento.nil? ? @cliente.dataNascimento :  @cliente.dataNascimento.strftime('%d/%m/%Y')  %>
+</p>
+
+
+<%= link_to 'Editar', edit_cliente_path(@cliente) %> <!--| <%= link_to 'Voltar', cliente_path(@cliente) %>-->
+
+
+<fieldset><legend><h3>Contas:</h3></legend>
+  <table>
+    <thead>
+    <tr>
+      <th>Descricao</th>
+      <th>Codigo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @cliente.contas.each do |conta| %>
+        <tr>
+          <td><%= conta.descricao %></td>
+          <td><%= conta.codigo %></td>
+          <td><%= link_to 'Show', cliente_conta_path(@cliente, conta) %></td>
+          <td><%= link_to 'Edit', edit_cliente_conta_path(@cliente, conta) %></td>
+          <td><%= link_to 'Destroy', cliente_conta_path(@cliente, conta), method: :delete, data: { message: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <br>
+  <%= link_to '+ Nova Conta', new_cliente_conta_path(@cliente.id) %>
+</fieldset>

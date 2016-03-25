@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+<tr>
+  <th>Data</th>
+  <th>Tipo</th>
+  <th>Valor</th>
+  <th>Conta Origem</th>
+  <th>Conta Destino</th>
+</tr>
+  <tr>
+    <td><%= @movimentacao.created_at.strftime('%d/%m/%Y') %></td>
+    <td><%= @movimentacao.tipo %></td>
+    <td><%= @movimentacao.valor %></td>
+    <td><%= @movimentacao.conta_orig.nil? ? '-' : @movimentacao.conta_orig.codigo %></td>
+    <td><%= @movimentacao.conta_dest.codigo %></td>
+  </tr>
+</table>
+
+<%= link_to 'Edit', edit_cliente_conta_movimentacao_path(@cliente, @conta, @movimentacao) %> |
+<% if @movimentacao.tipo != 'D' %>
+<%= link_to 'Voltar', cliente_conta_path(@cliente, @conta) %>
+<% else %>
+<%= link_to 'Voltar', caixa_index_path %>
+<% end %>

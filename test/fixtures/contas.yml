@@ -1,0 +1,12 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+conta_one:
+  descricao: ContaUm
+  codigo: 12345
+  cliente: cliente_um
+
+conta_two:
+  descricao: ContaDois
+  codigo: 23456
+  cliente: cliente_dois

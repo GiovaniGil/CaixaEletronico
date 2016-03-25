@@ -1,9 +1,33 @@
 CaixaEletronico::Application.routes.draw do
+
+  get "caixa/index"
+  get "contas/index"
+  get "contas/show"
+  get "contas/new"
+  get "contas/edit"
+  get "contas/create"
+  get "contas/update"
+  get "contas/destroy"
+
+  get "movimentacoes/index"
+  get "movimentacoes/show"
+  get "movimentacoes/new"
+  get "movimentacoes/edit"
+  get "movimentacoes/create"
+  get "movimentacoes/update"
+  get "movimentacoes/destroy"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+
+  resources :clientes do
+    resources :contas do
+      resources :movimentacoes
+    end
+  end
+
+  resources :movimentacoes, :only => [:new, :create, :show]
+  root 'caixa#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
