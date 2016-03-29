@@ -1,9 +1,10 @@
 class ContasController < ApplicationController
+  before_action :authenticate_cliente!
   before_action :set_conta, only: [:show, :edit, :update, :destroy]
 
   # GET /contas
   def index
-    @contas = Conta.all
+    redirect_to root_path
   end
 
   # GET /contas/1

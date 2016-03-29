@@ -1,5 +1,5 @@
 <h1>Cliente - <%= @cliente.nome %></h1>
-<p id="notice"><%= notice %></p>
+<%= link_to 'Editar', edit_cliente_path(@cliente) %> | <%= link_to 'Trocar senha', edit_cliente_registration_path %> |
 
 <p>
   <strong>Endereço:</strong>
@@ -16,16 +16,15 @@
   <%= @cliente.dataNascimento.nil? ? @cliente.dataNascimento :  @cliente.dataNascimento.strftime('%d/%m/%Y')  %>
 </p>
 
-
-<%= link_to 'Editar', edit_cliente_path(@cliente) %> <!--| <%= link_to 'Voltar', cliente_path(@cliente) %>-->
-
-
 <fieldset><legend><h3>Contas:</h3></legend>
   <table>
     <thead>
     <tr>
       <th>Descricao</th>
       <th>Codigo</th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -39,7 +38,11 @@
           <td><%= conta.codigo %></td>
           <td><%= link_to 'Show', cliente_conta_path(@cliente, conta) %></td>
           <td><%= link_to 'Edit', edit_cliente_conta_path(@cliente, conta) %></td>
-          <td><%= link_to 'Destroy', cliente_conta_path(@cliente, conta), method: :delete, data: { message: 'Are you sure?' } %></td>
+          <td><%= link_to 'Saldo', cliente_conta_saldo_show_path(@cliente, conta) %></td>
+          <td><%= link_to 'Extrato', cliente_conta_extrato_show_path(@cliente, conta) %></td>
+          <!--<td><%= link_to 'Destroy', cliente_conta_path(@cliente, conta), method: :delete, data: { message: 'Are you sure?' } %></td>-->
+          <td><%= link_to 'Saque', new_cliente_conta_movimentacao_path(@cliente, conta, :tipo => 'S') %></td>
+          <td><%= link_to 'Transferência', new_cliente_conta_movimentacao_path(@cliente, conta, :tipo => 'T') %></td>
         </tr>
     <% end %>
     </tbody>

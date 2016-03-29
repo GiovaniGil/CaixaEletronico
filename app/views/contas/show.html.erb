@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h2>Conta - <%= @conta.codigo %></h2>
 
 <p>
@@ -12,9 +10,8 @@
   <%= @conta.descricao %>
 </p>
 
-
 <fieldset>
-  <h3>Movimentações</h3>
+<!--  <h3>Movimentações</h3>
 
   <table>
     <thead>
@@ -42,7 +39,7 @@
     </tbody>
   </table>
 
-  <br>
+  <br>-->
 
   <ul>
     <li><%= link_to 'Saque', new_cliente_conta_movimentacao_path(@conta.cliente_id, @conta.id, :tipo => 'S') %></li>
@@ -50,3 +47,5 @@
   </ul>
 
 </fieldset>
+
+<%= link_to 'Voltar', cliente_path(@cliente) %>

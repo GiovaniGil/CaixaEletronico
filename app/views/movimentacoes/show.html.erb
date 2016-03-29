@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <table>
 <tr>
   <th>Data</th>
@@ -13,7 +11,7 @@
     <td><%= @movimentacao.tipo %></td>
     <td><%= @movimentacao.valor %></td>
     <td><%= @movimentacao.conta_orig.nil? ? '-' : @movimentacao.conta_orig.codigo %></td>
-    <td><%= @movimentacao.conta_dest.codigo %></td>
+    <td><%= @movimentacao.conta_dest.nil? ? '-' : @movimentacao.conta_dest.codigo %></td>
   </tr>
 </table>
 

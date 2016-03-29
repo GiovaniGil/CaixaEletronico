@@ -1,0 +1,21 @@
+<h1>Saldo</h1>
+<div>
+  <h3> Saldo: <%= number_to_currency(@conta.saldo) %></h3>
+</div>
+<!--<table>
+  <tr>
+    <th>Data</th>
+    <th>Tipo</th>
+    <th>Valor</th>
+  </tr>
+  <% @movimentacoes.sort{|a,b| b.created_at <=> a.created_at }.each do |movimentacao| %>
+  <tr>
+    <td><%= movimentacao.created_at.strftime('%d/%m/%Y %H:%m:%S') %></td>
+    <td><%= movimentacao.tipo == 'D' ? 'Depósito' : (movimentacao.tipo == 'S' ? 'Saque' : 'Trasferência')%></td>
+    <td><%= (movimentacao.tipo=='D' ? '+' : (movimentacao.tipo=='T' && movimentacao.conta_dest_id == @conta.id ? '+' : '-'))+
+                number_to_currency(movimentacao.valor, unit: '') %></td>
+  </tr>
+  <% end %>
+</table>-->
+<%= link_to 'Voltar', cliente_path(@cliente)%>
+

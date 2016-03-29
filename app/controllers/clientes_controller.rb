@@ -1,7 +1,9 @@
 class ClientesController < ApplicationController
+	before_action :authenticate_cliente!, except: [:new, :create]
+	before_filter :validate_user, only: [:show]
 
 	def index
-		@clientes = Cliente.all
+		redirect_to root_path
 	end
 
 	def edit
@@ -46,6 +48,13 @@ class ClientesController < ApplicationController
 
 	private
 	def cliente_params
-		params.require(:cliente).permit(:nome, :endereco, :telefone, :dataNascimento)
+		params.require(:cliente).permit(:nome, :endereco, :telefone, :dataNascimento, :email)
+	end
+
+	def validate_user
+			unless current_cliente and current_cliente.id.to_s == params[:id]
+			  reset_session
+				redirect_to root_path
+			end
 	end
 end

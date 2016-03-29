@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CaixaEletronico</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <title>Caixa Eletrônico</title>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if cliente_signed_in? %>
+    <p>Olá, <%= current_cliente.nome %> - <%= link_to 'Sair', destroy_cliente_session_path, :method => 'delete' %></p>
+  <% else %>
+    <%= link_to 'Entrar', cliente_session_path %>
+  <% end %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
 
-<%= yield %>
-
+  <%= yield %>
 </body>
 </html>

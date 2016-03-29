@@ -27,7 +27,6 @@ end
 
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?	
 
-
 group :test do
    gem 'ruby-prof'
 end
@@ -51,6 +50,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'devise'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

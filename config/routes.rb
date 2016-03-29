@@ -1,6 +1,10 @@
 CaixaEletronico::Application.routes.draw do
 
+  devise_for :clientes, controllers: {registrations: 'registrations'}
+
+  root "caixa#index"
   get "caixa/index"
+
   get "contas/index"
   get "contas/show"
   get "contas/new"
@@ -22,12 +26,17 @@ CaixaEletronico::Application.routes.draw do
 
   resources :clientes do
     resources :contas do
+      get "extrato/show"
+      patch "extrato/show"
+      get "saldo/show"
       resources :movimentacoes
     end
   end
 
   resources :movimentacoes, :only => [:new, :create, :show]
-  root 'caixa#index'
+
+  #erro 404 - tratando
+  get "*any", via: :all, to: "caixa#not_found"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

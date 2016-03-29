@@ -1,0 +1,26 @@
+<h1>Extrato</h1>
+<%= form_for [@cliente, @conta], remote: true, url: cliente_conta_extrato_show_path do |f| %>
+
+    <div>
+      <%= label_tag 'Data inicial' %>
+    </div>
+    <div>
+      <%= date_field_tag 'data_incial'%>
+    </div>
+
+    <div>
+      <%= label_tag 'Data final'%>
+    </div>
+    <div>
+      <%= date_field_tag 'data_final'%>
+    </div>
+
+    <div>
+      <%= submit_tag 'Filtrar' %>
+    </div>
+<% end %>
+<div id="tabela">
+
+</div>
+
+<%= link_to 'Voltar', cliente_path(@cliente)%>
