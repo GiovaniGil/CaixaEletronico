@@ -4,7 +4,8 @@ class ContasController < ApplicationController
 
   # GET /contas
   def index
-    redirect_to root_path
+    @cliente = Cliente.find(params[:cliente_id])
+    @contas = Conta.all
   end
 
   # GET /contas/1

@@ -1,5 +1,5 @@
 <% if @movimentacoes.count > 0 %>
-    <table>
+    <table class="table table-hover">
       <tr>
         <th>Data</th>
         <th>Tipo</th>
@@ -14,6 +14,8 @@
           </tr>
       <% end %>
     </table>
-    <div><h2>Saldo do período - <%= @conta.saldo %></h2></div>
-    <div><h2>Saldo - <%= @conta.saldo %></h2></div>
+    <div><h2>Saldo do período: <%=  number_to_currency(@conta.saldo_parcial(@movimentacoes)) %></h2></div>
+    <div><h2>Saldo: <%= number_to_currency(@conta.saldo) %></h2></div>
+<% else %>
+<%=  "Nenhum dado encontrado neste período" %>
 <% end %>

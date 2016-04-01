@@ -27,11 +27,16 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
+    autoprefixer-rails (6.3.5)
+      execjs
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
     autotest-rails (4.2.1)
       ZenTest (~> 4.5)
     bcrypt (3.1.11-x86-mingw32)
+    bootstrap-sass (3.3.5)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.1.4)
     coderay (1.1.1)
     coffee-rails (4.0.1)
@@ -170,6 +175,7 @@ DEPENDENCIES
   ZenTest (= 4.11.0)
   autotest (= 4.4.6)
   autotest-rails (= 4.2.1)
+  bootstrap-sass
   coffee-rails (~> 4.0.0)
   coffee-script-source (= 1.8.0)
   devise

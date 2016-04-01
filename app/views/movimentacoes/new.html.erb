@@ -1,5 +1,9 @@
-<h1>Nova movimentacao - <%= @movimentacao.tipo %></h1>
+<h1>Nova movimentacao - <%= @movimentacao.tipo == 'D' ? 'Depósito': (@movimentacao.tipo == 'T' ? 'Transferência' : 'Saque') %></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Voltar', cliente_conta_path(@cliente, @conta) %>
+<% if cliente_signed_in? %>
+    <%= link_to 'Voltar', cliente_conta_path(@cliente, @conta) %>
+<% else %>
+    <%= link_to 'Voltar', root_path %>
+<% end %>

@@ -1,5 +1,6 @@
 class MovimentacoesController < ApplicationController
   before_action :set_movimentacao, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_cliente!, except: [:new, :create, :show]
 
   # GET /movimentacoes
   # GET /movimentacoes.json
@@ -20,14 +21,23 @@ class MovimentacoesController < ApplicationController
   # GET /movimentacoes/new
   def new
 
+    if !(['T', 'S', 'D'].include?params[:tipo])
+      flash[:error] = 'MOVIMENTAÇÃO NÃO PERMITIDA'
+      redirect_to root_path
+      return
+    end
 
     if params[:tipo] != 'D'
       @contas = Conta.joins(:cliente)
-      @conta = Conta.find(params[:conta_id])
-      @cliente = Cliente.find(@conta.cliente_id)
+      if !params[:conta_id].nil?
+        @conta = Conta.find(params[:conta_id])
+        @cliente = Cliente.find(@conta.cliente_id)
+      else
+        flash[:error] = 'Conta não encontrada.'
+        redirect_to root_path
+        return
+      end
     end
-
-    cliente_logado
 
     @movimentacao = Movimentacao.new
 
@@ -46,21 +56,28 @@ class MovimentacoesController < ApplicationController
 
   # POST /movimentacoes
   def create
-    #verifica se o cliente está logado
-    cliente_logado
 
     #verifica qual o tipo de transação - Quando for Transferencia - T a conta de origem é a conta seleciona previamente
     #sendo Debito - D não precisa de conta_orig
     #sendo Saque - S é necessário apenas conta de destino
     @movimentacao = Movimentacao.new movimentacao_params
+
+    if @movimentacao.valor.nil? || @movimentacao.valor <= 0
+      flash[:error] = 'Valor deve ser um número inteiro maior que 0.'
+      redirect_to new_movimentacao_path(@movimentacao, :tipo => 'D')
+      return
+    end
+
     @conta_destino = Conta.find_by_codigo(@movimentacao.conta_dest_id)
     @conta_origem = Conta.find_by_codigo(@movimentacao.conta_orig_id)
     if (['D','T'].include? @movimentacao.tipo)
-         if @movimentacao.tipo == 'T'
-           @movimentacao.conta_orig_id = @conta_origem.id
-         else
-           @movimentacao.conta_orig_id = nil
-           @cliente = Cliente.find(@conta_destino.cliente_id)
+      if !@conta_destino.nil?
+        if @movimentacao.tipo == 'T'
+          @movimentacao.conta_orig_id = @conta_origem.id
+        else
+          @movimentacao.conta_orig_id = nil
+          @cliente = Cliente.find(@conta_destino.cliente_id)
+        end
       end
     else
       @movimentacao = Movimentacao.new movimentacao_params
@@ -68,8 +85,6 @@ class MovimentacoesController < ApplicationController
       @conta_origem = Conta.find(@movimentacao.conta_orig_id)
       @cliente = Cliente.find(params[:cliente_id])
     end
-
-
 
     if (['S','T'].include?@movimentacao.tipo) && (@movimentacao.valor > @conta_origem.saldo)
       flash[:alert] = "Valor da movimentação superior ao limite da conta. Ação cancelada."
@@ -83,22 +98,24 @@ class MovimentacoesController < ApplicationController
         @movimentacao.conta_dest_id = @conta_dest.id
       else
         flash[:error] = 'Conta de destino inexistente'
-        redirect_to new_movimentacao_path(@movimentacao, :tipo => @movimentacao.tipo), :action => :new
+        redirect_to new_movimentacao_path(@movimentacao, :tipo => 'D')
         return
       end
     end
 
-
     if @movimentacao.save
       if (['T', 'S'].include? @movimentacao.tipo)
         redirect_to cliente_conta_movimentacao_path(@cliente.id, @movimentacao.conta_orig_id, @movimentacao.id), notice: 'Movimentacao criada.'
+        return
       else
-        redirect_to movimentacao_path(@movimentacao)
+        flash[:notice] = 'Movimentação realizada com sucesso!'
+        redirect_to root_path(@movimentacao)
         return
       end
     else
       flash[:alert] = errors(@movimentacao)
       redirect_to cliente_conta_path(@cliente.id, @movimentacao.conta_orig_id)
+      return
     end
   end
 
@@ -146,13 +163,6 @@ class MovimentacoesController < ApplicationController
       end
     end
     erro
-  end
-
-  def cliente_logado
-    if params[:tipo] != 'D' && !cliente_signed_in?
-      redirect_to cliente_session_path
-      return
-    end
   end
 
 end

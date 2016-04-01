@@ -1,9 +1,29 @@
-<h1>Bem Vind ao Banco RoR</h1>
-<p><%= flash[:error] %></p>
-<p>Escolha a operção que deseja fazer:</p>
-
-<ul>
-  <li><%= link_to 'Novo cliente', new_cliente_path%></li>
-  <li><%= link_to 'Depósitos', new_movimentacao_path(:tipo => 'D') %></li>
-</ul>
-
+<div aria-hidden="false" style="background: #ccc url('/assets/banco-familia.jpg') no-repeat top;
+    background-size: cover; min-height:358px; max-height:716px">
+  <div>
+    <div style="margin-left: 5%" >
+      <h1 style="color:false">
+        <strong>Bem Vindo!</strong>
+      </h1>
+      <h3>Escolha o que deseja fazer:</h3>
+    </div>
+    <div class="row" style="margin-top: 5%; margin-left: 5%">
+      <div class="col-md-2 profile-userpic ">
+        <%= link_to new_cliente_path do %>
+            <figure>
+              <%= image_tag "add-client.png", :class =>  'img-thumbnail' %>
+              <figcaption style="color: #5e5e5e">Novo cliente</figcaption>
+            </figure>
+        <% end %>
+      </div>
+      <div class="col-md-2 profile-userpic ">
+        <%= link_to new_movimentacao_path(:tipo => 'D') do %>
+            <figure>
+              <%= image_tag "deposit.png", :class =>  'img-thumbnail' %>
+              <figcaption style="color: #5e5e5e">Depósitos</figcaption>
+            </figure>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,16 +23,17 @@
       <%= f.label :telefone %><br>
       <%= f.text_field :telefone %>
     </div>
-    <div class="field">
-      <%= f.label :dataNascimento, "Data de nascimento" %><br>
+    <div>
+      <%= f.label :dataNascimento, "Data de nascimento" %>
+    </div>
+    <div id='datetimepicker'>
       <%= f.date_select :dataNascimento,
                         :order => [:day, :month, :year],
                         :start_year => Date.current.year, :end_year => 1920,
-                        use_month_numbers: true,
                         prompt: { day: 'Dia', month: 'Mês', year: 'Ano' }%>
     </div>
 
-    <div class="actions">
+    <div class="field" style="padding-top: 10px;">
       <%= f.submit 'Salvar'%>
     </div>
 <% end %>

@@ -1,0 +1,32 @@
+<% if cliente_signed_in? %>
+    <li class="dropdown">
+      <a href="#" class=" dropdown-toggle" type="button" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-user"></span> <%= current_cliente.nome %>
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li> <%= link_to edit_cliente_registration_path do %>
+              <span class="glyphicon glyphicon-edit"></span> Alterar senha
+          <% end %>
+        </li>
+        <li class="divider"></li>
+        <li><%= link_to destroy_cliente_session_path, :method => 'delete' do%>
+              <span class="glyphicon glyphicon-log-out"></span> Sair
+          <% end %>
+        </li>
+      </ul>
+    </li>
+    <!--<li><%= link_to destroy_cliente_session_path, :method => 'delete' do%>
+          <span class="glyphicon glyphicon-log-out"></span> Sair
+      <% end %>
+    </li>-->
+
+
+<% else %>
+    <li>
+    <li>
+      <%= link_to new_cliente_path do%>
+          <span class="glyphicon glyphicon-user"></span> Cadastrar
+      <% end %></li>
+    </li>
+<% end %>

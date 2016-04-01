@@ -1,30 +1,30 @@
-<h1>Listing contas</h1>
-
-<p id="notice"><%= notice %></p>
-
-<table>
-  <thead>
+<fieldset>
+  <legend><h3>Contas:</h3></legend>
+  <table class="table table-hover">
+    <thead>
     <tr>
       <th>Descricao</th>
       <th>Codigo</th>
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
+      <th></th>
     </tr>
-  </thead>
-  <tbody>
-    <% @contas.each do |conta| %>
-      <tr>
-        <td><%= conta.descricao %></td>
-        <td><%= conta.codigo %></td>
-        <td><%= link_to 'Exibir', cliente_conta_path(@cliente, conta) %></td>
-        <td><%= link_to 'Editar', edit_cliente_conta_path(@cliente, conta) %></td>
-        <td><%= link_to 'Excluir', cliente_conta_path(@cliente, conta), method: :delete, data: { message: 'Are you sure?' } %></td>
-      </tr>
+    </thead>
+
+    <tbody>
+    <% @cliente.contas.each do |conta| %>
+        <tr>
+          <td><%= conta.descricao %></td>
+          <td><%= conta.codigo %></td>
+          <td><%= link_to 'Editar', edit_cliente_conta_path(@cliente, conta) %></td>
+          <td><%= link_to 'Saldo', cliente_conta_saldo_show_path(@cliente, conta) %></td>
+          <td><%= link_to 'Extrato', cliente_conta_extrato_show_path(@cliente, conta) %></td>
+          <td><%= link_to 'Saque', new_cliente_conta_movimentacao_path(@cliente, conta, :tipo => 'S') %></td>
+          <td><%= link_to 'Transferência', new_cliente_conta_movimentacao_path(@cliente, conta, :tipo => 'T') %></td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to '+ Nova Conta', new_cliente_conta_path(@cliente) %>
+    </tbody>
+  </table>
+</fieldset>

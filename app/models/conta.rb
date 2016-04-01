@@ -21,5 +21,19 @@ class Conta < ActiveRecord::Base
       end
     end
     saldo
+  end
+
+  def saldo_parcial(movimentacoes)
+    saldo = 0
+
+    movimentacoes.each do |movimentacao|
+      if  (['S', 'T'].include? movimentacao.tipo)
+        saldo -= movimentacao.valor
+      end
+      if movimentacao.tipo == 'D'
+        saldo += movimentacao.valor
+      end
     end
+    saldo
+  end
 end

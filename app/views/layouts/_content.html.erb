@@ -1,0 +1,21 @@
+<div class="profile-content">
+  <% if !notice.nil? %>
+      <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Informação!</strong> <%= notice %>
+      </div>
+  <% end %>
+  <% if !alert.nil? %>
+      <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Alerta!</strong> <%= alert %>
+      </div>
+  <% end %>
+  <% if !flash[:error].nil? %>
+      <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Atenção!</strong> <%= flash[:error] %>
+      </div>
+  <% end %>
+  <%= yield %>
+</div>

@@ -1,0 +1,72 @@
+<div class="col-md-3">
+  <div class="profile-sidebar">
+    <!-- SIDEBAR USERPIC -->
+    <div class="profile-userpic">
+      <%= image_tag "AVATAR.png", :class =>  'img-responsive' %>
+    </div>
+    <!-- END SIDEBAR USERPIC -->
+    <!-- SIDEBAR USER TITLE -->
+    <div class="profile-usertitle">
+      <div class="profile-usertitle-name">
+        <%= current_cliente.nome %>
+      </div>
+      <div class="profile-usertitle-job">
+        Cliente
+      </div>
+    </div>
+    <!-- END SIDEBAR USER TITLE -->
+    <!-- SIDEBAR BUTTONS -->
+    <div class="profile-userbuttons">
+
+      <%= link_to new_cliente_conta_path(@cliente.id), :class => "btn btn-success", :style => 'color: #FFFFFF',
+                  :role => "button" do %>
+          <span class="glyphicon glyphicon-plus-sign"></span>
+          Conta
+      <% end %>
+
+      <%= link_to @cliente, method: :delete,:class => "btn btn-danger btn-sm",:style => 'color: #FFFFFF',
+                  data: { confirm: 'Você tem certeza que deseja excluir o cadastro de "'+@cliente.nome+'"?' } do %>
+          <span class="glyphicon glyphicon-minus-sign"></span> Cliente
+      <% end %>
+
+<!--      <button type="button" class="btn btn-danger btn-sm">
+        <span class="glyphicon glyphicon-minus-sign"></span>
+        Encerrar</button>-->
+    </div>
+    <!-- END SIDEBAR BUTTONS -->
+    <!-- SIDEBAR MENU -->
+    <div class="profile-usermenu">
+      <ul class="nav">
+        <li>
+
+          <%= link_to cliente_path(@cliente) do%>
+              <i class="glyphicon glyphicon-home"></i>
+              Início
+          <% end %>
+        </li>
+        <li>
+          <%= link_to edit_cliente_path(@cliente) do%>
+              <i class="glyphicon glyphicon-user"></i>
+              Editar dados
+          <% end %>
+        </li>
+        <li>
+
+          <%= link_to cliente_contas_path(@cliente) do%>
+              <i class="glyphicon glyphicon-usd"></i>
+             Contas - Operações
+          <% end %>
+
+          <!--<a href="#" target="_blank">
+            <i class="glyphicon glyphicon-usd"></i>
+            Contas - Operações </a>-->
+        </li>
+        <li>
+          <%= link_to destroy_cliente_session_path, :method => 'delete' do%>
+              <span class="glyphicon glyphicon-log-out"></span> Sair
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
