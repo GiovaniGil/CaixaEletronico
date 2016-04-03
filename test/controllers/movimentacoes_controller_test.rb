@@ -1,15 +1,25 @@
 require "test_helper"
 
 class MovimentacoesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+  include Warden::Test::Helpers
+  Warden.test_mode!
 
   setup do
     @movimentacao ||= movimentacoes(:mov_one)
 
+    @movimentacaoSaque = Movimentacao.new :tipo => 'S',
+                :valor => 1,
+                :conta_orig_id => @movimentacao.conta_orig.codigo,
+                :conta_dest_id => nil
 
-    @create = { :tipo => 'T',
-                          :valor => 1,
-                          :conta_dest_id => @movimentacao.conta_dest.codigo,
-                          :conta_orig_id => @movimentacao.conta_orig.codigo}
+    @movimentacaoTransf = Movimentacao.new :tipo => 'T',
+                                          :valor => 1,
+                                          :conta_orig_id => @movimentacao.conta_orig.codigo,
+                                          :conta_dest_id => @movimentacao.conta_dest.codigo
+
+    @contaOrig = Conta.find_by_codigo(@movimentacao.conta_orig.codigo)
+    @contaDest = Conta.find_by_codigo(@movimentacao.conta_dest.codigo)
   end
 
 =begin
@@ -21,13 +31,38 @@ class MovimentacoesControllerTest < ActionController::TestCase
 =end
 
   def test_new
-    get :new, :cliente_id => Conta.find(@movimentacao.conta_dest_id).cliente_id, :conta_id => @movimentacao.conta_dest_id
+
+    @cliente = Cliente.find(@contaOrig.cliente_id)
+    authenticate(@cliente)
+
+    get :new, :cliente_id => @cliente.id, :conta_id => @contaOrig.id,  :tipo => 'S'
     assert_response :success
   end
 
-  def test_create
+
+  def test_new_2
+    get :new, :tipo => 'D'
+    assert_response :success
+  end
+
+  def test_create_saque
+    authenticate(Cliente.find(@contaOrig.cliente_id))
+
     assert_difference('Movimentacao.count') do
-      post :create, movimentacao: @create, :cliente_id => Conta.find(@movimentacao.conta_dest_id).cliente_id, :conta_id => @movimentacao.conta_dest_id
+      post :create, movimentacao: @movimentacaoSaque.attributes,
+           :cliente_id => @contaOrig.cliente_id,
+           :conta_id => @contaOrig.id
+    end
+    assert_response :redirect
+  end
+
+  def test_create_transferencia
+    authenticate(Cliente.find(@contaOrig.cliente_id))
+
+    assert_difference('Movimentacao.count') do
+      post :create, movimentacao: @movimentacaoTransf.attributes,
+           :cliente_id => @contaOrig.cliente_id,
+           :conta_id => @contaOrig.id
     end
     assert_response :redirect
   end
@@ -39,6 +74,7 @@ class MovimentacoesControllerTest < ActionController::TestCase
 
 
   def test_edit
+    authenticate(Cliente.find(@contaOrig.cliente_id))
     get :edit, id: @movimentacao.to_param, :cliente_id => Conta.find(@movimentacao.conta_dest_id).cliente_id, :conta_id => @movimentacao.conta_dest_id
     assert_response :success
   end
@@ -53,11 +89,10 @@ class MovimentacoesControllerTest < ActionController::TestCase
 
 
   def test_destroy
-    assert_difference('Movimentacao.count', -1) do
-      @conta = Conta.find(@movimentacao.conta_dest_id)
-      delete :destroy, id: @movimentacao.to_param, :cliente_id => @conta.cliente_id, :conta_id => @movimentacao.conta_dest_id
+    authenticate(Cliente.find(@contaOrig.cliente_id))
+    assert_difference('Movimentacao.count', 0) do
+      delete :destroy, id: @movimentacao.to_param, :cliente_id => @contaOrig.cliente_id, :conta_id => @contaOrig.id
     end
-
-    assert_redirected_to cliente_conta_path(@conta.cliente_id, @conta.id)
+    assert_redirected_to cliente_conta_path(@contaOrig.cliente_id, @contaOrig)
   end
 end

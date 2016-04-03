@@ -3,7 +3,7 @@ require "test_helper"
 class ClienteTest < ActiveSupport::TestCase
 
   def cliente
-    @cliente ||= Cliente.new nome: "Giovani Paulino"
+    @cliente ||= Cliente.new nome: "Giovani Paulino", email: 'j@j.com.br', password: Devise::Encryptor.digest(Cliente, 'password')
   end
 
   def test_valid
@@ -12,7 +12,7 @@ class ClienteTest < ActiveSupport::TestCase
 
   def test_sem_nome
   	cliente.nome = nil
-  	refute cliente.valid?	
+  	refute cliente.valid?
   end
 
   def test_tamanho_nome

@@ -1,5 +1,6 @@
 class ExtratoController < ApplicationController
   before_action :authenticate_cliente!
+
   def show
     @cliente = Cliente.find(params[:cliente_id])
     @conta = Conta.find(params[:conta_id])

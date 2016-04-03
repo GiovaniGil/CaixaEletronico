@@ -48,7 +48,7 @@ class ClientesController < ApplicationController
 
 	private
 	def cliente_params
-		params.require(:cliente).permit(:nome, :endereco, :telefone, :dataNascimento, :email)
+		params.require(:cliente).permit(:nome, :endereco, :telefone, :dataNascimento, :email, :password, :password_confirmation)
 	end
 
 	def validate_user

@@ -20,18 +20,21 @@ class MovimentacoesController < ApplicationController
 
   # GET /movimentacoes/new
   def new
-
+    @movimentacao = Movimentacao.new
     if !(['T', 'S', 'D'].include?params[:tipo])
       flash[:error] = 'MOVIMENTAÇÃO NÃO PERMITIDA'
       redirect_to root_path
       return
+    else
+      !params[:tipo].nil?
+      @movimentacao.tipo = params[:tipo]
     end
 
     if params[:tipo] != 'D'
       @contas = Conta.joins(:cliente)
       if !params[:conta_id].nil?
         @conta = Conta.find(params[:conta_id])
-        @cliente = Cliente.find(@conta.cliente_id)
+        @cliente = Cliente.find(params[:cliente_id])
       else
         flash[:error] = 'Conta não encontrada.'
         redirect_to root_path
@@ -39,11 +42,7 @@ class MovimentacoesController < ApplicationController
       end
     end
 
-    @movimentacao = Movimentacao.new
 
-    if !params[:tipo].nil?
-      @movimentacao.tipo = params[:tipo]
-    end
     #render new_cliente_conta_movimentacao_path(@cliente, @conta)
   end
 
@@ -74,6 +73,7 @@ class MovimentacoesController < ApplicationController
       if !@conta_destino.nil?
         if @movimentacao.tipo == 'T'
           @movimentacao.conta_orig_id = @conta_origem.id
+          @cliente = Cliente.find(params[:cliente_id])
         else
           @movimentacao.conta_orig_id = nil
           @cliente = Cliente.find(@conta_destino.cliente_id)
@@ -135,7 +135,6 @@ class MovimentacoesController < ApplicationController
   def destroy
     @conta = Conta.find(params[:conta_id])
     @cliente = Cliente.find(@conta.cliente_id)
-    @movimentacao.destroy
     flash[:notice] = 'Não é possível excluir movimentações.'
     redirect_to cliente_conta_path(@cliente, @conta)
   end
@@ -144,11 +143,6 @@ class MovimentacoesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_movimentacao
     @movimentacao = Movimentacao.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def movimentacao_params_transferencia_deposito
-    params.require(:movimentacao).permit(:tipo, :valor, :conta_dest_id)
   end
 
   def movimentacao_params

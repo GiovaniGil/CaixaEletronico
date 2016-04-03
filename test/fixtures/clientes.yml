@@ -6,9 +6,13 @@ cliente_um:
   endereco: MyString
   telefone: MyString
   dataNascimento: 2016-03-21
+  email: g@g.com.br
+  encrypted_password: <%= Devise::Encryptor.digest(Cliente, 'password') %>
 
 cliente_dois:
   nome: Cliente 2
   endereco: MyString
   telefone: MyString
   dataNascimento: 2016-03-21
+  email: h@h.com.br
+  encrypted_password: <%= Devise::Encryptor.digest(Cliente, 'password') %>

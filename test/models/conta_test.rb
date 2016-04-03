@@ -3,7 +3,7 @@ require "test_helper"
 class ContaTest < ActiveSupport::TestCase
 
   def conta
-    @conta ||= Conta.new codigo:"12345", cliente_id: 1
+    @conta ||= Conta.new codigo:"88888", cliente_id: 1
   end
 
   def test_valid
