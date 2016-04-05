@@ -68,7 +68,12 @@ class MovimentacoesController < ApplicationController
     end
 
     @conta_destino = Conta.find_by_codigo(@movimentacao.conta_dest_id)
-    @conta_origem = Conta.find_by_codigo(@movimentacao.conta_orig_id)
+    if (['S','T'].include? @movimentacao.tipo)
+      @conta_origem = Conta.find(params[:conta_id])
+    else
+      @conta_origem = Conta.find_by_codigo(@movimentacao.conta_orig_id)
+    end
+
     if (['D','T'].include? @movimentacao.tipo)
       if !@conta_destino.nil?
         if @movimentacao.tipo == 'T'
@@ -87,13 +92,13 @@ class MovimentacoesController < ApplicationController
     end
 
     if (['S','T'].include?@movimentacao.tipo) && (@movimentacao.valor > @conta_origem.saldo)
-      flash[:alert] = "Valor da movimentação superior ao limite da conta. Ação cancelada."
+      flash[:alert] = 'Valor da movimentação superior ao limite da conta. Ação cancelada.'
       redirect_to cliente_conta_path(@cliente.id, @movimentacao.conta_orig_id)
       return
     end
 
     if !@movimentacao.conta_dest_id.nil?
-      if Conta.exists?(codigo: @movimentacao.conta_dest_id)
+      if Conta.exists?(['codigo = ? and ativa = ?', @movimentacao.conta_dest_id, true])
         @conta_dest = Conta.find_by_codigo(@movimentacao.conta_dest_id)
         @movimentacao.conta_dest_id = @conta_dest.id
       else

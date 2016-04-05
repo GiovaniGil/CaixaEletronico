@@ -10,42 +10,4 @@
   <%= @conta.descricao %>
 </p>
 
-<fieldset>
-<!--  <h3>Movimentações</h3>
-
-  <table>
-    <thead>
-    <tr>
-      <th>Data</th>
-      <th>Tipo</th>
-      <th>Valor</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @conta.origens.each do |movimentacao| %>
-        <tr>
-          <td><%= movimentacao.created_at.strftime('%d/%m/%Y') %></td>
-          <td><%= movimentacao.tipo %></td>
-          <td><%= movimentacao.valor %></td>
-          <td><%= link_to 'Show', cliente_conta_movimentacao_path(@cliente, @conta, movimentacao) %></td>
-          <td><%= link_to 'Edit', edit_cliente_conta_movimentacao_path(@cliente, @conta, movimentacao) %></td>
-          <td><%= link_to 'Destroy', cliente_conta_movimentacao_path(@cliente, @conta, movimentacao), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-  <br>-->
-
-  <ul>
-    <li><%= link_to 'Saque', new_cliente_conta_movimentacao_path(@conta.cliente_id, @conta.id, :tipo => 'S') %></li>
-    <li><%= link_to 'Transferência', new_cliente_conta_movimentacao_path(@conta.cliente_id, @conta.id, :tipo => 'T') %></li>
-  </ul>
-
-</fieldset>
-
 <%= link_to 'Voltar', cliente_path(@cliente) %>

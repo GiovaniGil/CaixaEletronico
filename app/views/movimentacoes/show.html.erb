@@ -1,23 +1,27 @@
-<table>
-<tr>
-  <th>Data</th>
-  <th>Tipo</th>
-  <th>Valor</th>
-  <th>Conta Origem</th>
-  <th>Conta Destino</th>
-</tr>
-  <tr>
-    <td><%= @movimentacao.created_at.strftime('%d/%m/%Y') %></td>
-    <td><%= @movimentacao.tipo %></td>
-    <td><%= @movimentacao.valor %></td>
-    <td><%= @movimentacao.conta_orig.nil? ? '-' : @movimentacao.conta_orig.codigo %></td>
-    <td><%= @movimentacao.conta_dest.nil? ? '-' : @movimentacao.conta_dest.codigo %></td>
-  </tr>
-</table>
+<h2>Comprovante de Movimentação</h2>
+<div>
+  <strong>Data:</strong> <%= @movimentacao.created_at.strftime('%d/%m/%Y') %>
+</div>
 
-<%= link_to 'Edit', edit_cliente_conta_movimentacao_path(@cliente, @conta, @movimentacao) %> |
+<div>
+  <strong>Tipo:</strong> <%= @movimentacao.tipo %>
+</div>
+
+<div>
+  <strong>Valor:</strong> <%= @movimentacao.valor %>
+</div>
+
+<div>
+  <strong>Conta Origem:</strong> <%= @movimentacao.conta_orig.nil? ? '-' : @movimentacao.conta_orig.codigo %>
+</div>
+
+<div>
+  <strong>Conta Destino:</strong> <%= @movimentacao.conta_dest.nil? ? '-' : @movimentacao.conta_dest.codigo %>
+</div>
+
+<br/>
 <% if @movimentacao.tipo != 'D' %>
-<%= link_to 'Voltar', cliente_conta_path(@cliente, @conta) %>
+    <%= link_to 'Voltar', cliente_contas_path(@cliente) %>
 <% else %>
-<%= link_to 'Voltar', caixa_index_path %>
+    <%= link_to 'Voltar', caixa_index_path %>
 <% end %>

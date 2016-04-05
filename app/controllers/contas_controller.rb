@@ -4,14 +4,14 @@ class ContasController < ApplicationController
 
   # GET /contas
   def index
-    @cliente = Cliente.find(params[:cliente_id])
-    @contas = Conta.all
+    @cliente = Cliente.find( params[:cliente_id])
+    @contas = Conta.where(['cliente_id=? and ativa=?', params[:cliente_id], true])
   end
 
   # GET /contas/1
   def show
     @cliente = Cliente.find(params[:cliente_id])
-    @conta = Conta.find(params[:id])
+    @conta = Conta.find(params[:id], :conditions => ["ativa=?", true])
   end
 
   # GET /contas/new
@@ -23,7 +23,7 @@ class ContasController < ApplicationController
   # GET /contas/1/edit
   def edit
     @cliente = Cliente.find(params[:cliente_id])
-    @conta = Conta.find(params[:id])
+    @conta = Conta.find(params[:id], :conditions => ["ativa=?", true])
   end
 
   # POST /contas
@@ -52,8 +52,15 @@ class ContasController < ApplicationController
 
   # DELETE /contas/1
   def destroy
-    flash[:notice] = 'Não é possível excluir contas.'
-    redirect_to cliente_path(params[:cliente_id])
+    @conta = Conta.find(params[:id])
+    @conta.ativa = false
+    if @conta.save
+      flash[:notice] = 'Conta desativada!'
+      redirect_to cliente_path(params[:cliente_id])
+    else
+      flash[:error] = 'Conta não pôde ser desativada!'
+      redirect_to cliente_path(params[:cliente_id])
+    end
   end
 
   private

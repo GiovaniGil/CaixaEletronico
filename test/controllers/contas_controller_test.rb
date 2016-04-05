@@ -50,6 +50,6 @@ class ContasControllerTest < ActionController::TestCase
     assert_difference('Conta.count', 0) do
       delete :destroy, :id => @conta.to_param, :cliente_id => @conta.cliente_id
     end
-    assert_equal 'Não é possível excluir contas.', flash[:notice]
+    assert_equal 'Conta desativada!', flash[:notice]
   end
 end

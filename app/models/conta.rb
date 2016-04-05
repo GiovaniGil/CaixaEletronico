@@ -13,27 +13,42 @@ class Conta < ActiveRecord::Base
     movimentacoes = (self.origens << self.destinos).sort{|a,b| a.created_at <=> b.created_at }
 
     movimentacoes.each do |movimentacao|
-      if  (['S', 'T'].include? movimentacao.tipo)
+      if  (['T'].include? movimentacao.tipo)
+        if self.id == movimentacao.conta_dest_id
+          saldo += movimentacao.valor
+        else
+          saldo -= movimentacao.valor
+        end
+      end
+
+      if  (['S'].include? movimentacao.tipo)
         saldo -= movimentacao.valor
       end
       if movimentacao.tipo == 'D'
         saldo += movimentacao.valor
       end
+
     end
     saldo
   end
+
 
   def saldo_parcial(movimentacoes)
     saldo = 0
 
     movimentacoes.each do |movimentacao|
-      if  (['S', 'T'].include? movimentacao.tipo)
-        saldo -= movimentacao.valor
+      if  (['T'].include? movimentacao.tipo)
+        if self.id == movimentacao.conta_dest_id
+          saldo += movimentacao.valor
+        else
+          saldo -= movimentacao.valor
+        end
       end
       if movimentacao.tipo == 'D'
         saldo += movimentacao.valor
       end
     end
     saldo
-  end
+    end
+
 end
