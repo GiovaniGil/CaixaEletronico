@@ -1,6 +1,23 @@
 <h2>Novo cliente</h2>
 <hr/>
 <%= form_for @cliente do |f| %>
+
+    <% if @cliente.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Atenção!</strong>
+            <ul>
+              <% @cliente.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+    <% resource.errors.each do |attr,msg| %>
+        <li><%= msg %></li>
+    <% end %>
     <div>
       <%= f.label :nome %>
     </div>

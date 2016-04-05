@@ -3,7 +3,7 @@
 <%= render 'form' %>
 
 <% if cliente_signed_in? %>
-    <%= link_to 'Voltar', cliente_conta_path(@cliente, @conta) %>
+    <%= link_to 'Voltar', cliente_contas_path(@cliente) %>
 <% else %>
     <%= link_to 'Voltar', root_path %>
 <% end %>

@@ -63,7 +63,11 @@ class MovimentacoesController < ApplicationController
 
     if @movimentacao.valor.nil? || @movimentacao.valor <= 0
       flash[:error] = 'Valor deve ser um número inteiro maior que 0.'
-      redirect_to new_movimentacao_path(@movimentacao, :tipo => 'D')
+      if @movimentacao.tipo == 'D'
+        redirect_to new_movimentacao_path(@movimentacao, :tipo => 'D')
+      else
+        redirect_to new_cliente_conta_movimentacao_path(params[:cliente_id], params[:conta_id], :tipo => @movimentacao.tipo)
+      end
       return
     end
 
@@ -83,6 +87,10 @@ class MovimentacoesController < ApplicationController
           @movimentacao.conta_orig_id = nil
           @cliente = Cliente.find(@conta_destino.cliente_id)
         end
+      else
+        flash[:error] = 'Conta de destino inexistente'
+        redirect_to new_cliente_conta_movimentacao_path(params[:cliente_id], params[:conta_id], :tipo => @movimentacao.tipo)
+        return
       end
     else
       @movimentacao = Movimentacao.new movimentacao_params
